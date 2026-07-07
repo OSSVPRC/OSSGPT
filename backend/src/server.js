@@ -24,6 +24,10 @@ mongoose.connect(process.env.MONGO_URI || '')
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.warn('MongoDB not available:', err.message));
 
+app.get('/', (req, res) => {
+  res.json({ name: 'OSSGPT Backend', status: 'running', frontend: FRONTEND_URL, docs: '/api/health' });
+});
+
 app.get('/api/health', async (req, res) => {
   const mongoState = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   try {
