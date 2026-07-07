@@ -1,4 +1,4 @@
-const { chat } = require('./ollama.service');
+const { chat } = require('./glm.service');
 const { searchRelevantChunks } = require('./embedding.service');
 
 const SYSTEM_PROMPT = `Tu es OSSGPT, assistant institutionnel de démonstration de l'Observatoire du Sahara et du Sahel. Tu réponds en français clair et professionnel. Tu t'appuies uniquement sur le contexte fourni lorsque la question concerne les documents. Si l'information n'est pas disponible dans les documents, indique clairement que tu ne disposes pas d'éléments suffisants.`;
@@ -34,7 +34,7 @@ async function ask(question) {
   const response = await chat(messages);
 
   return {
-    reply: response.message?.content || '',
+    reply: response.choices?.[0]?.message?.content?.trim() || '',
     sources,
   };
 }

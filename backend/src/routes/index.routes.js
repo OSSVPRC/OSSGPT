@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { buildIndex } = require('../services/embedding.service');
-const { checkHealth } = require('../services/ollama.service');
 
 const router = Router();
 

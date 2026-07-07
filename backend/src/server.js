@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const chatRoutes = require('./routes/chat.routes');
 const documentsRoutes = require('./routes/documents.routes');
 const indexRoutes = require('./routes/index.routes');
-const { checkHealth } = require('./services/ollama.service');
+const { checkHealth } = require('./services/glm.service');
 
 const app = express();
 const PORT = process.env.PORT || 8030;
@@ -28,9 +28,14 @@ app.get('/api/health', async (req, res) => {
   const mongoState = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   try {
     await checkHealth();
-    res.json({ status: 'ok', ollama: 'connected', mongodb: mongoState });
-  } catch {
-    res.json({ status: 'ok', ollama: 'unreachable', mongodb: mongoState });
+    res.json({ status: 'ok', glm: 'connected', mongodb: mongoState });
+  } catch (err) {
+    const status = err.response?.status;
+    if (status === 429 || status === 402) {
+      res.json({ status: 'ok', glm: 'no_balance', mongodb: mongoState });
+    } else {
+      res.json({ status: 'ok', glm: 'unreachable', mongodb: mongoState });
+    }
   }
 });
 
