@@ -43,6 +43,23 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/documents', documentsRoutes);
 app.use('/api/index', indexRoutes);
 
+async function autoBuildIndex() {
+  try {
+    const { buildIndex, loadIndex } = require('./services/embedding.service');
+    const index = loadIndex();
+    if (index.chunks.length > 0) {
+      console.log(`Index already built: ${index.chunks.length} chunks`);
+      return;
+    }
+    console.log('Building document index...');
+    const result = await buildIndex();
+    console.log(`Index built: ${result.count} chunks from ${result.sources.length} documents`);
+  } catch (err) {
+    console.warn('Index build skipped:', err.message);
+  }
+}
+
 app.listen(PORT, () => {
   console.log(`OSSGPT Backend running on http://localhost:${PORT}`);
+  autoBuildIndex();
 });
