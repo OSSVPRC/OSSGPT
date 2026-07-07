@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { ask } = require('../services/rag.service');
+const Message = require('../models/Message');
 
 const router = Router();
 
@@ -11,6 +12,10 @@ router.post('/', async (req, res) => {
     }
 
     const result = await ask(message.trim());
+
+    Message.create({ question: message.trim(), reply: result.reply, sources: result.sources })
+      .catch(err => console.warn('Failed to save message:', err.message));
+
     res.json(result);
   } catch (err) {
     console.error('Chat error:', err.message);

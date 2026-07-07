@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 export interface ChatResponse {
   reply: string;
@@ -7,7 +8,7 @@ export interface ChatResponse {
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private apiUrl = 'http://localhost:8030/api';
+  private apiUrl = environment.apiUrl;
 
   async sendMessage(message: string): Promise<ChatResponse> {
     const res = await fetch(`${this.apiUrl}/chat`, {
