@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: ossgpt-backend
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node src/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: PORT
+        value: "8030"
+      - key: GLM_API_KEY
+        sync: false
+      - key: GLM_API_URL
+        value: https://api.z.ai/api/paas/v4
+      - key: GLM_CHAT_MODEL
+        value: glm-4.5-flash
+      - key: FRONTEND_URL
+        value: https://OSSVPRC.github.io
+      - key: MONGO_URI
+        sync: false
+      - key: DOCUMENTS_DIR
+        value: ../documents
+      - key: INDEX_PATH
+        value: ../data/index.json
