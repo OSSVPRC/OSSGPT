@@ -1,0 +1,21 @@
+{
+  "name": "ossgpt-backend",
+  "version": "1.0.0",
+  "description": "Backend API for OSSGPT - Observatoire du Sahara et du Sahel AI Assistant",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test src/**/*.test.js"
+  },
+  "keywords": ["oss", "sahara", "sahel", "rag", "ollama"],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "mammoth": "^1.8.0",
+    "pdf-parse": "^1.1.1"
+  }
+}
