@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
   res.json({ name: 'OSSGPT Backend', status: 'running', frontend: FRONTEND_URL, docs: '/api/health' });
 });
 
+app.post('/api/ping', (req, res) => {
+  res.json({ pong: true, body: req.body });
+});
+
 app.get('/api/health', async (req, res) => {
   const mongoState = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   try {
