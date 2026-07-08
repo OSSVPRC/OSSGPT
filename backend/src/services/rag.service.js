@@ -31,10 +31,20 @@ async function ask(question) {
     { role: 'user', content: userMessage },
   ];
 
-  const response = await chat(messages);
+  let reply = '';
+  try {
+    const response = await chat(messages);
+    reply = response.choices?.[0]?.message?.content?.trim() || '';
+  } catch (err) {
+    console.warn('GLM chat failed, using document fallback:', err.message);
+    const excerpts = relevantChunks.map(r =>
+      `[${r.chunk.source}] ${r.chunk.text.slice(0, 500)}...`
+    ).join('\n\n');
+    reply = `Désolé, le service GLM est temporairement indisponible. Voici les passages pertinents de la base documentaire :\n\n${excerpts}`;
+  }
 
   return {
-    reply: response.choices?.[0]?.message?.content?.trim() || '',
+    reply,
     sources,
   };
 }
