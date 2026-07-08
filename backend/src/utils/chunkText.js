@@ -1,4 +1,4 @@
-function chunkText(text, maxTokens = 200, overlap = 20) {
+function chunkText(text, maxTokens = 100, overlap = 10) {
   const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
   const chunks = [];
   let current = [];

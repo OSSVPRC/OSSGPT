@@ -32,12 +32,18 @@
       </div>
     }
 
-    @if (loading()) {
+    @if (loading() && !hasFirstToken()) {
       <div class="message assistant">
         <div class="bubble loading">
+          @if (status()) {
+            <span class="status-text">{{ status() }}</span>
+          }
           <span class="dot-pulse"></span>
         </div>
       </div>
+    }
+    @if (loading() && hasFirstToken() && status()) {
+      <div class="status-bar">{{ status() }}</div>
     }
 
     @if (error()) {

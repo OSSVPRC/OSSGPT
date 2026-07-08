@@ -21,6 +21,8 @@ export class ChatComponent {
   protected readonly userInput = signal('');
   protected readonly loading = signal(false);
   protected readonly error = signal('');
+  protected readonly status = signal('');
+  protected readonly hasFirstToken = signal(false);
 
   private chatService = new ChatService();
 
@@ -30,17 +32,22 @@ export class ChatComponent {
 
     this.userInput.set('');
     this.error.set('');
+    this.status.set('');
+    this.hasFirstToken.set(false);
 
-    const msgIndex = this.messages().length;
     this.messages.update(msgs => [...msgs, { role: 'user', content: text }]);
     this.loading.set(true);
 
-    this.messages.update(msgs => [...msgs, { role: 'assistant', content: '' }]);
     let sources: { name: string; score: string }[] = [];
 
     try {
       await this.chatService.sendMessageStream(text, {
         onToken: (token) => {
+          if (!this.hasFirstToken()) {
+            this.hasFirstToken.set(true);
+            this.status.set('Génération de la réponse...');
+            this.messages.update(msgs => [...msgs, { role: 'assistant', content: '' }]);
+          }
           this.messages.update(msgs => {
             const updated = [...msgs];
             const last = { ...updated[updated.length - 1] };
@@ -51,8 +58,10 @@ export class ChatComponent {
         },
         onSources: (srcs) => {
           sources = srcs;
+          this.status.set('Analyse en cours...');
         },
         onDone: (reply, srcs) => {
+          this.status.set('');
           this.messages.update(msgs => {
             const updated = [...msgs];
             updated[updated.length - 1] = { role: 'assistant', content: reply, sources: srcs };
@@ -61,12 +70,13 @@ export class ChatComponent {
           this.loading.set(false);
         },
         onError: (errMsg) => {
-          this.messages.update(msgs => msgs.slice(0, -1));
+          this.status.set('');
           this.error.set(errMsg);
           this.loading.set(false);
         },
       });
     } catch (err: any) {
+      this.status.set('');
       this.error.set(err.message || 'Impossible de contacter le serveur.');
       this.loading.set(false);
     }

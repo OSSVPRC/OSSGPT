@@ -1,7 +1,7 @@
 const { chat } = require('./glm.service');
 const { searchRelevantChunks } = require('./embedding.service');
 
-const SYSTEM_PROMPT = `Tu es OSSGPT, assistant institutionnel de démonstration de l'Observatoire du Sahara et du Sahel. Tu réponds en français clair et professionnel. Tu t'appuies uniquement sur le contexte fourni lorsque la question concerne les documents. Si l'information n'est pas disponible dans les documents, indique clairement que tu ne disposes pas d'éléments suffisants.`;
+const SYSTEM_PROMPT = `Assistant OSSGPT de l'Observatoire du Sahara et du Sahel. Réponds en français, de façon concise, sans réfléchir à voix haute. Base-toi uniquement sur le contexte fourni.`;
 
 async function ask(question) {
   const relevantChunks = await searchRelevantChunks(question);

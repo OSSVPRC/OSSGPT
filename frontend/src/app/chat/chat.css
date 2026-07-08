@@ -117,6 +117,21 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-direction: column;
+}
+
+.status-text {
+  font-size: 0.85rem;
+  color: #5A7A6A;
+  margin-bottom: 4px;
+}
+
+.status-bar {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #8aa99a;
+  padding: 4px 8px;
+  font-style: italic;
 }
 
 .dot-pulse::before {

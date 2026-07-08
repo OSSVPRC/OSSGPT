@@ -64,7 +64,7 @@ async function buildIndex() {
   return { count: allChunks.length, sources: docs.map(d => d.name) };
 }
 
-async function searchRelevantChunks(question, topK = 3) {
+async function searchRelevantChunks(question, topK = 2) {
   const index = loadIndex();
   if (index.chunks.length === 0) return [];
 

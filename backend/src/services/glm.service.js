@@ -17,8 +17,9 @@ async function chat(messages) {
   const payload = {
     model: getChatModel(),
     messages,
-    max_tokens: 500,
+    max_tokens: 200,
     stream: false,
+    thinking: { type: 'disabled' },
   };
   const response = await axios.post(url, payload, {
     headers: {
@@ -35,8 +36,9 @@ async function chatStream(messages, onToken) {
   const payload = {
     model: getChatModel(),
     messages,
-    max_tokens: 500,
+    max_tokens: 200,
     stream: true,
+    thinking: { type: 'disabled' },
   };
   const response = await axios.post(url, payload, {
     headers: {
