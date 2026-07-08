@@ -17,7 +17,7 @@ async function chat(messages) {
   const payload = {
     model: getChatModel(),
     messages,
-    max_tokens: 300,
+    max_tokens: 500,
     stream: false,
   };
   const response = await axios.post(url, payload, {
@@ -25,7 +25,7 @@ async function chat(messages) {
       'Authorization': `Bearer ${getApiKey()}`,
       'Content-Type': 'application/json',
     },
-    timeout: 45000,
+    timeout: 60000,
   });
   return response.data;
 }
