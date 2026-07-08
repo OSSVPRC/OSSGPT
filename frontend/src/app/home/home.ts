@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,6 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.css',
 })
 export class HomeComponent {
+  private sanitizer = inject(DomSanitizer);
   readonly thematiques = [
     {
       title: 'Agroécologie',
@@ -65,7 +67,7 @@ export class HomeComponent {
     },
   ];
 
-  iconSvg(icon: string): string {
+  iconSvg(icon: string): SafeHtml {
     const icons: Record<string, string> = {
       leaf: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1B5E3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 7 6 7 12c0 3.3 2.7 6 6 6s6-2.7 6-6c0-6-7-10-7-10z"/><path d="M12 2v18"/><path d="M12 20c-2 0-4 2-4 4h8c0-2-2-4-4-4z"/></svg>',
       paw: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1B5E3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="10" r="3"/><circle cx="17" cy="10" r="3"/><circle cx="5" cy="17" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M12 12c-2 0-4 2-4 5v3h8v-3c0-3-2-5-4-5z"/></svg>',
@@ -78,6 +80,6 @@ export class HomeComponent {
       lang: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B5E3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M7 6c1 4 2 8 5 10M17 6c-1 4-2 8-5 10"/></svg>',
       shield: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B5E3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
     };
-    return icons[icon] || icons['search'];
+    return this.sanitizer.bypassSecurityTrustHtml(icons[icon] || icons['search']);
   }
 }
