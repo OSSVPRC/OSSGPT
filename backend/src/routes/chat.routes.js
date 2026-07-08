@@ -38,6 +38,7 @@ router.post('/stream', async (req, res) => {
     'Cache-Control': 'no-cache',
     Connection: 'keep-alive',
   });
+  res.flushHeaders();
 
   let fullReply = '';
   const sources = [];
