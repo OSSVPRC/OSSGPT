@@ -30,6 +30,44 @@ async function chat(messages) {
   return response.data;
 }
 
+async function chatStream(messages, onToken) {
+  const url = `${getBaseUrl()}/chat/completions`;
+  const payload = {
+    model: getChatModel(),
+    messages,
+    max_tokens: 500,
+    stream: true,
+  };
+  const response = await axios.post(url, payload, {
+    headers: {
+      'Authorization': `Bearer ${getApiKey()}`,
+      'Content-Type': 'application/json',
+    },
+    responseType: 'stream',
+    timeout: 60000,
+  });
+
+  let buffer = '';
+
+  for await (const chunk of response.data) {
+    buffer += Buffer.isBuffer(chunk) ? chunk.toString('utf-8') : chunk;
+    const lines = buffer.split('\n');
+    buffer = lines.pop() || '';
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed.startsWith('data: ')) {
+        const data = trimmed.slice(6);
+        if (data === '[DONE]') return;
+        try {
+          const parsed = JSON.parse(data);
+          const token = parsed.choices?.[0]?.delta?.content || '';
+          if (token) onToken(token);
+        } catch { /* skip malformed */ }
+      }
+    }
+  }
+}
+
 async function checkHealth() {
   const url = `${getBaseUrl()}/chat/completions`;
   const payload = {
@@ -49,4 +87,4 @@ async function checkHealth() {
   return response.data;
 }
 
-module.exports = { chat, checkHealth };
+module.exports = { chat, chatStream, checkHealth, getChatModel };
