@@ -18,6 +18,7 @@ async function chat(messages) {
     model: getChatModel(),
     messages,
     max_tokens: 300,
+    stream: false,
   };
   const response = await axios.post(url, payload, {
     headers: {
