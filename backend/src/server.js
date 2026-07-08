@@ -18,7 +18,7 @@ app.use(cors({
   origin: [FRONTEND_URL, 'http://localhost:4200'],
   methods: ['GET', 'POST'],
 }));
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 
 mongoose.connect(process.env.MONGO_URI || '')
   .then(() => console.log('MongoDB connected'))
