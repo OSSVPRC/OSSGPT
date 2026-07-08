@@ -48,26 +48,6 @@ function tokenize(text) {
   return text.toLowerCase().split(/[^\wÀ-ÿ]+/).filter(t => t.length > 1 && !STOP_WORDS.has(t));
 }
 
-function computeIdf(chunks, term) {
-  const docsWithTerm = chunks.filter(c => tokenize(c.text).includes(term)).length;
-  return Math.log((chunks.length + 1) / (docsWithTerm + 1)) + 1;
-}
-
-function tfidfScore(questionTokens, chunkText, idfCache) {
-  const chunkTokens = tokenize(chunkText);
-  const termFreq = {};
-  for (const t of chunkTokens) {
-    termFreq[t] = (termFreq[t] || 0) + 1;
-  }
-  let score = 0;
-  for (const t of questionTokens) {
-    const tf = (termFreq[t] || 0) / chunkTokens.length;
-    const idf = idfCache[t] || 1;
-    score += tf * idf;
-  }
-  return score;
-}
-
 async function buildIndex() {
   const docs = await loadAllDocuments();
   const allChunks = [];
@@ -91,19 +71,31 @@ async function searchRelevantChunks(question, topK = 3) {
   const questionTokens = tokenize(question);
   if (questionTokens.length === 0) return [];
 
-  const idfCache = {};
+  const chunkTokens = index.chunks.map(c => tokenize(c.text));
   const allTerms = new Set();
-  for (const c of index.chunks) {
-    for (const t of tokenize(c.text)) allTerms.add(t);
-  }
-  for (const t of allTerms) {
-    idfCache[t] = computeIdf(index.chunks, t);
+  for (const tokens of chunkTokens) {
+    for (const t of tokens) allTerms.add(t);
   }
 
-  const scored = index.chunks.map(chunk => ({
-    chunk,
-    score: tfidfScore(questionTokens, chunk.text, idfCache),
-  }));
+  const docCount = index.chunks.length;
+  const idfCache = {};
+  for (const t of allTerms) {
+    const docsWithTerm = chunkTokens.filter(tokens => tokens.includes(t)).length;
+    idfCache[t] = Math.log((docCount + 1) / (docsWithTerm + 1)) + 1;
+  }
+
+  const scored = index.chunks.map((chunk, i) => {
+    const tokens = chunkTokens[i];
+    const termFreq = {};
+    for (const t of tokens) termFreq[t] = (termFreq[t] || 0) + 1;
+    let score = 0;
+    for (const t of questionTokens) {
+      const tf = (termFreq[t] || 0) / tokens.length;
+      const idf = idfCache[t] || 1;
+      score += tf * idf;
+    }
+    return { chunk, score };
+  });
 
   scored.sort((a, b) => b.score - a.score);
   return scored.slice(0, topK).filter(item => item.score > 0);
