@@ -1,0 +1,456 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #0D3B1E;
+}
+
+/* ─── HEADER ─── */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 34px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.logo {
+  width: 95px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.site-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1B5E3A;
+  letter-spacing: 0.5px;
+}
+
+.nav-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: 14px;
+  border: 2px solid #A5D6A7;
+  background: #fff;
+  color: #1B5E3A;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background: #E8F5E9;
+  border-color: #81C784;
+}
+
+.btn-chat {
+  width: 108px;
+}
+
+.btn-ressources {
+  width: 154px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  margin-top: 80px;
+  width: 100%;
+  height: 500px;
+  background-image: url('/background.png');
+  background-size: cover;
+  background-position: center right;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(232,245,233,0.6) 50%, rgba(255,255,255,0.3) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin-left: 108px;
+  padding-right: 40px;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #0D3B1E;
+  margin-bottom: 16px;
+}
+
+.hero-content p {
+  font-size: 19px;
+  line-height: 1.55;
+  color: #2D5A3E;
+  margin-bottom: 32px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 275px;
+  border-radius: 14px;
+  border: none;
+  background: #1B5E3A;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #0D3B1E;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 250px;
+  border-radius: 14px;
+  border: 2px solid #1B5E3A;
+  background: #fff;
+  color: #1B5E3A;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #E8F5E9;
+}
+
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 3;
+  line-height: 0;
+}
+
+.hero-wave svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── THÉMATIQUES ─── */
+.thematiques {
+  padding: 60px 20px 40px;
+}
+
+.section-inner {
+  max-width: 1075px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+  color: #1B5E3A;
+  margin-bottom: 12px;
+}
+
+.section-divider {
+  width: 42px;
+  height: 3px;
+  background: #1B5E3A;
+  border-radius: 2px;
+  margin: 0 auto 34px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 38px 26px;
+}
+
+.card {
+  width: 100%;
+  height: 110px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #E8F5E9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-text h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1B5E3A;
+  margin-bottom: 4px;
+}
+
+.card-text p {
+  font-size: 0.85rem;
+  color: #5A7A6A;
+  line-height: 1.4;
+}
+
+/* ─── AVANTAGES ─── */
+.avantages {
+  padding: 0 20px 40px;
+}
+
+.avantages-inner {
+  max-width: 1395px;
+  margin: 0 auto;
+  padding: 26px 46px;
+  border-radius: 16px;
+  background: #F1F8E9;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  position: relative;
+}
+
+.avantage {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+  padding: 4px 0;
+}
+
+.avantage-icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avantage-text h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1B5E3A;
+  margin-bottom: 4px;
+}
+
+.avantage-text p {
+  font-size: 13px;
+  color: #5A7A6A;
+  line-height: 1.45;
+}
+
+.avantage-sep {
+  position: absolute;
+  right: -14px;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: #C8E6C9;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 24px 20px;
+  border-top: 1px solid #E0E8E0;
+}
+
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer p {
+  font-size: 14px;
+  color: #6B8F7B;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .hero-content {
+    margin-left: 60px;
+    max-width: 480px;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+  }
+
+  .hero-content p {
+    font-size: 17px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .avantages-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 40px;
+  }
+
+  .avantage-sep:nth-child(2n) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 64px;
+  }
+
+  .header-inner {
+    padding: 0 16px;
+  }
+
+  .logo {
+    width: 72px;
+    height: 34px;
+  }
+
+  .site-title {
+    font-size: 24px;
+  }
+
+  .btn-chat {
+    width: 80px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .btn-ressources {
+    width: 110px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .hero {
+    margin-top: 64px;
+    height: 420px;
+  }
+
+  .hero-content {
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 100%;
+    padding-right: 0;
+  }
+
+  .hero-content h1 {
+    font-size: 26px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    height: auto;
+    min-height: 90px;
+  }
+
+  .avantages-inner {
+    grid-template-columns: 1fr;
+    padding: 20px 24px;
+    gap: 20px;
+  }
+
+  .avantage-sep {
+    display: none;
+  }
+
+  .footer p {
+    font-size: 12px;
+  }
+}
